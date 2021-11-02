@@ -10,6 +10,7 @@
  */
 namespace Cascade\Tests\Config\Loader\FileLoader;
 
+use PHPUnit\Framework\TestCase;
 use Symfony\Component\Config\FileLocator;
 use Symfony\Component\Config\FileLocatorInterface;
 use org\bovigo\vfs\vfsStream;
@@ -21,7 +22,7 @@ use Cascade\Tests\Fixtures;
  *
  * @author Raphael Antonmattei <rantonmattei@theorchard.com>
  */
-class FileLoaderAbstractTest extends \PHPUnit_Framework_TestCase
+class FileLoaderAbstractTest extends TestCase
 {
     /**
      * Mock of extending Cascade\Config\Loader\FileLoader\FileLoaderAbstract
@@ -29,11 +30,11 @@ class FileLoaderAbstractTest extends \PHPUnit_Framework_TestCase
      */
     protected $mock = null;
 
-    public function setUp()
+    public function setUp(): void
     {
         parent::setUp();
 
-        $fileLocatorMock = $this->getMock(
+        $fileLocatorMock = $this->createMock(
             'Symfony\Component\Config\FileLocatorInterface'
         );
 
@@ -47,7 +48,7 @@ class FileLoaderAbstractTest extends \PHPUnit_Framework_TestCase
         \FileLoaderAbstractMockClass::$validExtensions = array('test', 'php');
     }
 
-    public function tearDown()
+    public function tearDown(): void
     {
         $this->mock = null;
         parent::tearDown();
@@ -151,11 +152,10 @@ class FileLoaderAbstractTest extends \PHPUnit_Framework_TestCase
 
     /**
      * Test loading an invalid file
-     *
-     * @expectedException \RuntimeException
      */
     public function testloadFileFromInvalidFile()
     {
+        $this->expectException(\RuntimeException::class);
         // mocking the file system from a 'config_dir' base dir
         $root = vfsStream::setup('config_dir');
 

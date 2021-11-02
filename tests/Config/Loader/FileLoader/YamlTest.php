@@ -10,6 +10,7 @@
  */
 namespace Cascade\Tests\Config\Loader\FileLoader;
 
+use PHPUnit\Framework\TestCase;
 use Symfony\Component\Yaml\Yaml as YamlParser;
 
 use Cascade\Tests\Fixtures;
@@ -19,7 +20,7 @@ use Cascade\Tests\Fixtures;
  *
  * @author Raphael Antonmattei <rantonmattei@theorchard.com>
  */
-class YamlTest extends \PHPUnit_Framework_TestCase
+class YamlTest extends TestCase
 {
     /**
      * Yaml loader mock builder
@@ -27,11 +28,11 @@ class YamlTest extends \PHPUnit_Framework_TestCase
      */
     protected $yamlLoader = null;
 
-    public function setUp()
+    public function setUp(): void
     {
         parent::setUp();
 
-        $fileLocatorMock = $this->getMock(
+        $fileLocatorMock = $this->createMock(
             'Symfony\Component\Config\FileLocatorInterface'
         );
 
@@ -39,11 +40,11 @@ class YamlTest extends \PHPUnit_Framework_TestCase
             'Cascade\Config\Loader\FileLoader\Yaml'
         )
             ->setConstructorArgs(array($fileLocatorMock))
-            ->setMethods(array('readFrom', 'isFile', 'validateExtension'))
+            ->onlyMethods(array('readFrom', 'isFile', 'validateExtension'))
             ->getMock();
     }
 
-    public function tearDown()
+    public function tearDown(): void
     {
         $this->yamlLoader = null;
         parent::tearDown();
