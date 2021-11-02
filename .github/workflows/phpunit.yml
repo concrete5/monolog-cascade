@@ -1,0 +1,35 @@
+name: CI
+
+on: [push, pull_request]
+
+jobs:
+  phpunit:
+    strategy:
+      matrix:
+        #php: ['7.3', '7.4', '8.0', '8.1.0RC5']
+        php: ['8.0']
+
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v2
+    - uses: php-actions/composer@v5
+      with:
+        php_version: ${{ matrix.php }}
+    - uses: php-actions/phpunit@v3
+      with:
+        php_version: ${{ matrix.php }}
+  phpcs:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - uses: shivammathur/setup-php@v2
+        with:
+          php-version: '8.0'
+          tools: cs2pr, phpcs
+      - name: Run phpcs
+        continue-on-error: true
+        run: phpcs -p --report-full --report-checkstyle=./phpcs-report.xml --extensions=php --standard=PSR2 ./src ./tests | cs2pr
+
+      - name: Show PHPCS results in PR
+        run: cs2pr ./phpcs-report.xml
