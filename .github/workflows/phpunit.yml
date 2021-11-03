@@ -24,9 +24,12 @@ jobs:
 
       - run: ./vendor/bin/phpunit --coverage-clover clover.xml
 
-      - name: Coveralls
-        uses: coverallsapp/github-action@master
-        with:
-          github-token: ${{ secrets.GITHUB_TOKEN }}
-          parallel: true
-          flag-name: php${{ matrix.php }}
+#      - name: Coveralls
+#        uses: coverallsapp/github-action@master
+#        with:
+#          github-token: ${{ secrets.GITHUB_TOKEN }}
+#          parallel: true
+#          flag-name: php${{ matrix.php }}
+
+      - name: Upload to coveralls
+        run: vendor/bin/coveralls -vvv
