@@ -14,6 +14,7 @@ namespace Cascade\Tests\Config\Loader\ClassLoader;
 
 use Monolog\Formatter\LineFormatter;
 use Cascade\Config\Loader\ClassLoader\HandlerLoader;
+use Monolog\Handler\LogglyHandler;
 use PHPUnit\Framework\TestCase;
 
 /**
@@ -286,5 +287,22 @@ class HandlerLoaderTest extends TestCase
         $this->assertSame($handlers['foo'], $options['handlers'][0]);
         $this->assertSame($handlers['bar'], $options['handlers'][1]);
         $this->assertSame($handlers['baz'], $options['handler']);
+    }
+
+
+    /**
+     * Ensure initialization happens as expected.
+     */
+    public function testInitExtraOptionsHandlers()
+    {
+        HandlerLoader::$extraOptionHandlers = [];
+
+        HandlerLoader::initExtraOptionsHandlers();
+
+        // Make sure we have the expected array keys
+        $this->assertArrayHasKey(LogglyHandler::class, HandlerLoader::$extraOptionHandlers);
+        $this->assertArrayHasKey('*', HandlerLoader::$extraOptionHandlers);
+        $this->assertArrayHasKey('formatter', HandlerLoader::$extraOptionHandlers['*']);
+        $this->assertArrayHasKey('processors', HandlerLoader::$extraOptionHandlers['*']);
     }
 }

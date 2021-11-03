@@ -13,6 +13,7 @@
 namespace Cascade\Tests\Config\Loader\ClassLoader;
 
 use Cascade\Config\Loader\ClassLoader\FormatterLoader;
+use Monolog\Formatter\LineFormatter;
 use PHPUnit\Framework\TestCase;
 
 /**
@@ -137,5 +138,17 @@ class FormatterLoaderTest extends TestCase
         $closure = $this->getHandler($class, $optionName);
 
         $this->doTestMethodCalledInHandler($class, $calledMethodName, $optionValue, $closure);
+    }
+
+    /**
+     * Ensure initialization happens as expected.
+     */
+    public function testInitExtraOptionsHandlers()
+    {
+        FormatterLoader::$extraOptionHandlers = [];
+
+        FormatterLoader::initExtraOptionsHandlers();
+
+        $this->assertArrayHasKey(LineFormatter::class, FormatterLoader::$extraOptionHandlers);
     }
 }
