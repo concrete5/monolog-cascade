@@ -1,4 +1,4 @@
-Monolog Cascade [![Build Status](https://travis-ci.org/theorchard/monolog-cascade.svg?branch=master)](https://travis-ci.org/theorchard/monolog-cascade) [![Coverage Status](https://coveralls.io/repos/theorchard/monolog-cascade/badge.svg?branch=master)](https://coveralls.io/r/theorchard/monolog-cascade?branch=master)
+Monolog Cascade [![Build Status](https://github.com/concrete5/monolog-cascade/actions/workflows/phpunit.yml/badge.svg)](https://github.com/concrete5/monolog-cascade/actions/workflows/phpunit.yml) [![Coverage Status](https://coveralls.io/repos/concrete5/monolog-cascade/badge.svg?branch=main)](https://coveralls.io/r/concrete5/monolog-cascade?branch=main)
 ===============
 
 What is Monolog Cascade?
@@ -8,6 +8,7 @@ Monolog Cascade is a [Monolog](https://github.com/Seldaek/monolog) extension tha
 
 It's been inspired by the [`logging.config`](https://docs.python.org/3.4/library/logging.config.html?highlight=fileconfig#module-logging.config) Python module.
 
+This repo has been forked by the concrete core team.
 
 ------------
 
