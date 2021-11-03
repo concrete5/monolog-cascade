@@ -6,13 +6,15 @@ jobs:
   build-test:
     strategy:
       matrix:
-        php: [7.3, 7.4, 8.0, 8.1]
+        php: ['7.3', '7.4', '8.0', '8.1']
 
     runs-on: ubuntu-latest
 
     steps:
     - uses: actions/checkout@v2
-    - uses: php-actions/composer@v5 # or alternative dependency management
+    - uses: php-actions/composer@v5
+      with:
+        php_version: ${{ matrix.php-versions }}
     - uses: php-actions/phpunit@v3
       with:
         php_version: ${{ matrix.php-versions }}
