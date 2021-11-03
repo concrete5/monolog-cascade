@@ -1,4 +1,4 @@
-name: CI
+name: PHPUnit
 
 on: [push, pull_request]
 
@@ -12,24 +12,21 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-    - uses: actions/checkout@v2
-    - uses: php-actions/composer@v5
-      with:
-        php_version: ${{ matrix.php }}
-    - uses: php-actions/phpunit@v3
-      with:
-        php_version: ${{ matrix.php }}
-  phpcs:
-    runs-on: ubuntu-latest
-    steps:
       - uses: actions/checkout@v2
-      - uses: shivammathur/setup-php@v2
+
+      - name: Setup PHP
+        uses: shivammathur/setup-php@v2
         with:
           php-version: '8.0'
-          tools: cs2pr, phpcs
-      - name: Run phpcs
-        continue-on-error: true
-        run: phpcs -p --report-full --report-checkstyle=./phpcs-report.xml --extensions=php --standard=PSR2 ./src ./tests | cs2pr
+          tools: composer2
 
-      - name: Show PHPCS results in PR
-        run: cs2pr ./phpcs-report.xml
+      - run: composer install
+
+      - run: ./vendor/bin/phpunit --coverage-clover clover.xml
+
+      - name: Coveralls
+        uses: coverallsapp/github-action@master
+        with:
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+          parallel: true
+          flag-name: php${{ matrix.php }}
