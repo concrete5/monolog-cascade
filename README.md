@@ -18,10 +18,8 @@ Installation
 
 Add `monolog-cascade` as a requirement in your `composer.json` file or run
 ```sh
-$ composer require theorchard/monolog-cascade
+$ composer require concrete5/monolog-cascade
 ```
-
-Note: Monolog Cascade requires PHP 5.3.9 or higher.
 
 Usage
 -----
