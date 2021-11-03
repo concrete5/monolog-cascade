@@ -88,6 +88,10 @@ class Config
         $this->options = $this->loader->load($this->input);
     }
 
+    public function notPsr2() {
+        // this should fail phpcs tests
+    }
+
     /**
      * Configure and register Logger(s) according to the options passed in
      */
