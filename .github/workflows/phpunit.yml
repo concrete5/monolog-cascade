@@ -1,4 +1,4 @@
-name: CI
+name: PHPUnit
 
 on: [push, pull_request]
 
@@ -6,30 +6,32 @@ jobs:
   phpunit:
     strategy:
       matrix:
-        #php: ['7.3', '7.4', '8.0', '8.1.0RC5']
-        php: ['8.0']
+        php: ['7.3', '7.4', '8.0', '8.1.0RC5']
 
     runs-on: ubuntu-latest
 
-    steps:
-    - uses: actions/checkout@v2
-    - uses: php-actions/composer@v5
-      with:
-        php_version: ${{ matrix.php }}
-    - uses: php-actions/phpunit@v3
-      with:
-        php_version: ${{ matrix.php }}
-  phpcs:
-    runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
-      - uses: shivammathur/setup-php@v2
-        with:
-          php-version: '8.0'
-          tools: cs2pr, phpcs
-      - name: Run phpcs
-        continue-on-error: true
-        run: phpcs -p --report-full --report-checkstyle=./phpcs-report.xml --extensions=php --standard=PSR2 ./src ./tests | cs2pr
 
-      - name: Show PHPCS results in PR
-        run: cs2pr ./phpcs-report.xml
+      - name: Setup PHP
+        uses: shivammathur/setup-php@v2
+        with:
+          php-version: ${{ matrix.php }}
+          tools: composer2
+
+      - run: composer install
+
+      - run: ./vendor/bin/phpunit --coverage-clover clover.xml
+
+#      - name: Coveralls
+#        uses: coverallsapp/github-action@master
+#        with:
+#          github-token: ${{ secrets.GITHUB_TOKEN }}
+#          parallel: true
+#          flag-name: php${{ matrix.php }}
+
+      - name: Upload to coveralls
+        env:
+          COVERALLS_REPO_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          if [ '${{ matrix.php }}' = '8.0' ]; then vendor/bin/php-coveralls -vvv ; fi
