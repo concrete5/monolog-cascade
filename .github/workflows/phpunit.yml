@@ -7,7 +7,7 @@ jobs:
     strategy:
       matrix:
         #php: ['7.3', '7.4', '8.0', '8.1.0RC5']
-        php: ['7.3', '7.4', '8.0', '8.1.0RC5']
+        php: ['8.0']
 
     runs-on: ubuntu-latest
 
@@ -28,4 +28,4 @@ jobs:
           php-version: '8.0'
           tools: cs2pr, phpcs
       - name: Run phpcs
-        run: phpcs -p --extensions=php --standard=PSR2 ./src ./tests
+        run: phpcs -p --checkstyle --extensions=php --standard=PSR2 ./src ./tests | cs2pr
