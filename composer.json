@@ -39,7 +39,7 @@
         "phpunit/phpcov": "^8.2.0",
         "phpunit/phpunit": "^9",
         "php-coveralls/php-coveralls": "^1.0",
-        "squizlabs/php_codesniffer": "^2.5"
+        "squizlabs/php_codesniffer": "^3.6.0"
     },
     "prefer-stable": true,
     "extra": {
