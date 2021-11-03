@@ -17,7 +17,7 @@ jobs:
       - name: Setup PHP
         uses: shivammathur/setup-php@v2
         with:
-          php-version: '8.0'
+          php-version: ${{ matrix.php }}
           tools: composer2
 
       - run: composer install
@@ -32,4 +32,5 @@ jobs:
 #          flag-name: php${{ matrix.php }}
 
       - name: Upload to coveralls
-        run: vendor/bin/coveralls -vvv
+        run: |
+          if [ '${{ matrix.php }}' = '8.0' ]; then vendor/bin/coveralls -vvv ; fi
