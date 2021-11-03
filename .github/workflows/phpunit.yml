@@ -4,6 +4,8 @@ on: [push, pull_request]
 
 jobs:
   phpunit:
+    env:
+      COVERALLS_RUN_LOCALLY: 1
     strategy:
       matrix:
         #php: ['7.3', '7.4', '8.0', '8.1.0RC5']
