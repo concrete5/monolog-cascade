@@ -28,4 +28,4 @@ jobs:
           php-version: '8.0'
           tools: cs2pr, phpcs
       - name: Run phpcs
-        run: phpcs -p --extensions=php --standard=PSR2 ./src ./tests | cs2pr
+        run: phpcs -p --extensions=php --standard=PSR2 ./src ./tests
